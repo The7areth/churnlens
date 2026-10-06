@@ -16,8 +16,17 @@ The Mac did not have a system OpenMP installation. For the three-model benchmark
 
 This combination of numerical libraries on macOS emitted matrix-operation warnings, and some dependencies emitted deprecation/solver-option warnings. Every validation probability was finite. Independent Python scalar dot products and sigmoid calculations matched the persisted Logistic Regression pipeline with maximum absolute difference **2.22e-16**; batch versus individual-row predictions agreed within **1.11e-16**. The solver converged in 38 iterations. These checks support the reported inference results, but do not establish portability to every platform.
 
-## Not verified here
+## GitHub publication verification
 
-- Docker image build and container execution: Docker CLI/engine was unavailable in this environment. Dockerfile, Compose configuration, and CI build steps are included.
-- Current GitHub Actions execution: consult the [live workflow](https://github.com/The7areth/churnlens/actions/workflows/ci.yml); publication-time results are recorded below when verified.
-- Production deployment, external validation, calibration, fairness, or measured retention/revenue impact.
+[GitHub Actions run 37402873687](https://github.com/The7areth/churnlens/actions/runs/37402873687) **passed** on October 6, 2026, for commit `88f90500d61423fd6bacb8eda64c5f9071cefb8f`:
+
+- Installed the project on Ubuntu with Python 3.12 and checked formatting.
+- Passed all 17 automated tests.
+- Trained all three models on the included synthetic sample.
+- Built and started the API and UI with Docker Compose, waited for health checks, exercised the prediction endpoint, and verified Streamlit readiness.
+
+The container check uses synthetic data to verify packaging and service behavior; the benchmark metrics above come from the full IBM dataset. Docker was verified in Linux CI because the local Mac had no Docker engine. Consult the [live workflow](https://github.com/The7areth/churnlens/actions/workflows/ci.yml) for subsequent runs.
+
+## Not verified
+
+Production deployment, external validation, calibration, fairness, or measured retention/revenue impact.

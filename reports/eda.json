@@ -1,0 +1,33 @@
+{
+  "scope": "training partition only",
+  "rows": 4225,
+  "churn_rate": 0.26532544378698225,
+  "missing_values": {
+    "customerID": 0,
+    "gender": 0,
+    "SeniorCitizen": 0,
+    "Partner": 0,
+    "Dependents": 0,
+    "tenure": 0,
+    "PhoneService": 0,
+    "MultipleLines": 0,
+    "InternetService": 0,
+    "OnlineSecurity": 0,
+    "OnlineBackup": 0,
+    "DeviceProtection": 0,
+    "TechSupport": 0,
+    "StreamingTV": 0,
+    "StreamingMovies": 0,
+    "Contract": 0,
+    "PaperlessBilling": 0,
+    "PaymentMethod": 0,
+    "MonthlyCharges": 0,
+    "TotalCharges": 7,
+    "Churn": 0
+  },
+  "contract_churn_rate": {
+    "Month-to-month": 0.4305555555555556,
+    "One year": 0.11049107142857142,
+    "Two year": 0.02926829268292683
+  }
+}

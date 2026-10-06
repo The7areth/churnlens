@@ -1,0 +1,171 @@
+{
+  "dataset": "IBM Telco",
+  "dataset_sha256": "16320c9c1ec72448db59aa0a26a0b95401046bef5d02fd3aeb906448e3055e91",
+  "seed": 42,
+  "split_counts": {
+    "train": 4225,
+    "validation": 1409,
+    "test": 1409
+  },
+  "selected_model": "Logistic Regression",
+  "selection_metric": "validation ROC-AUC at fixed model parameters",
+  "decision_threshold": 0.49499999999999994,
+  "threshold_selection": "maximum validation F1 on 0.05\u20130.95 grid, step 0.005",
+  "validation_at_0_5": {
+    "Logistic Regression": {
+      "precision": 0.6981132075471698,
+      "recall": 0.5935828877005348,
+      "f1": 0.6416184971098265,
+      "roc_auc": 0.8599292154279368,
+      "average_precision": 0.6777345710832229,
+      "brier_score": 0.1303165410408361,
+      "confusion_matrix": [
+        [
+          939,
+          96
+        ],
+        [
+          152,
+          222
+        ]
+      ]
+    },
+    "Random Forest": {
+      "precision": 0.6824817518248175,
+      "recall": 0.5,
+      "f1": 0.5771604938271605,
+      "roc_auc": 0.8569815805109923,
+      "average_precision": 0.6752417312478822,
+      "brier_score": 0.1312095406147199,
+      "confusion_matrix": [
+        [
+          948,
+          87
+        ],
+        [
+          187,
+          187
+        ]
+      ]
+    },
+    "XGBoost": {
+      "precision": 0.6862068965517242,
+      "recall": 0.5320855614973262,
+      "f1": 0.5993975903614458,
+      "roc_auc": 0.8574104213490402,
+      "average_precision": 0.6783651216185158,
+      "brier_score": 0.13011711372417362,
+      "confusion_matrix": [
+        [
+          944,
+          91
+        ],
+        [
+          175,
+          199
+        ]
+      ]
+    }
+  },
+  "test_at_0_5": {
+    "Logistic Regression": {
+      "precision": 0.6194968553459119,
+      "recall": 0.5267379679144385,
+      "f1": 0.569364161849711,
+      "roc_auc": 0.8324059004365911,
+      "average_precision": 0.622134294323446,
+      "brier_score": 0.14144688142965992,
+      "confusion_matrix": [
+        [
+          914,
+          121
+        ],
+        [
+          177,
+          197
+        ]
+      ]
+    },
+    "Random Forest": {
+      "precision": 0.6410256410256411,
+      "recall": 0.4679144385026738,
+      "f1": 0.5409582689335394,
+      "roc_auc": 0.8312885892169779,
+      "average_precision": 0.6311920413469654,
+      "brier_score": 0.14055149838293962,
+      "confusion_matrix": [
+        [
+          937,
+          98
+        ],
+        [
+          199,
+          175
+        ]
+      ]
+    },
+    "XGBoost": {
+      "precision": 0.6219081272084805,
+      "recall": 0.47058823529411764,
+      "f1": 0.5357686453576864,
+      "roc_auc": 0.8324756516572374,
+      "average_precision": 0.6390304749675937,
+      "brier_score": 0.14047943071597027,
+      "confusion_matrix": [
+        [
+          928,
+          107
+        ],
+        [
+          198,
+          176
+        ]
+      ]
+    }
+  },
+  "selected_test_at_tuned_threshold": {
+    "precision": 0.6141975308641975,
+    "recall": 0.5320855614973262,
+    "f1": 0.5702005730659025,
+    "roc_auc": 0.8324059004365911,
+    "average_precision": 0.622134294323446,
+    "brier_score": 0.14144688142965992,
+    "confusion_matrix": [
+      [
+        910,
+        125
+      ],
+      [
+        175,
+        199
+      ]
+    ]
+  },
+  "baseline_test": {
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "roc_auc": 0.5,
+    "average_precision": 0.2654364797728886,
+    "brier_score": 0.19497996730765565,
+    "confusion_matrix": [
+      [
+        1035,
+        0
+      ],
+      [
+        374,
+        0
+      ]
+    ]
+  },
+  "skipped_models": {},
+  "versions": {
+    "pandas": "2.2.3",
+    "numpy": "2.2.6",
+    "scikit-learn": "1.6.1",
+    "joblib": "1.4.2",
+    "xgboost": "2.1.4"
+  },
+  "python": "3.12.14"
+}

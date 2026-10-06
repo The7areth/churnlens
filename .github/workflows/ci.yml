@@ -1,0 +1,50 @@
+name: Test and reproduce
+on: [push, pull_request]
+permissions:
+  contents: read
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install project
+        run: pip install -r requirements-dev.txt && pip install --no-deps -e .
+      - name: Check formatting
+        run: black --check src app tests
+      - name: Test data, API, and UI
+        run: pytest -q
+      - name: Reproduce a synthetic three-model smoke run
+        run: |
+          python -m churn.train --data data/sample.csv --artifacts artifacts --reports reports/smoke
+          python -c "import json; r=json.load(open('reports/smoke/metrics.json')); assert len(r['test_at_0_5']) == 3, r['skipped_models']"
+      - name: Start Docker services
+        run: docker compose up --build --detach --wait --wait-timeout 120
+      - name: Exercise the container API and UI
+        run: |
+          python - <<'PYTHON'
+          import json
+          import requests
+          health = requests.get('http://127.0.0.1:8000/health', timeout=10)
+          health.raise_for_status()
+          payload = json.load(open('examples/customer.json'))
+          result = requests.post('http://127.0.0.1:8000/predict', json=payload, timeout=10)
+          result.raise_for_status()
+          assert 0 <= result.json()['churn_probability'] <= 1
+          assert 'synthetic' in result.json()['dataset'].lower()
+          ui = requests.get('http://127.0.0.1:8501/_stcore/health', timeout=10)
+          ui.raise_for_status()
+          PYTHON
+      - name: Container logs
+        if: failure()
+        run: docker compose logs --no-color
+      - name: Stop containers
+        if: always()
+        run: docker compose down

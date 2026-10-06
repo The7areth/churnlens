@@ -2,11 +2,11 @@
 
 ## Intended use
 
-An educational demonstration for Hareth Al-Fawaz's portfolio: estimate whether a record resembles churned customers in IBM's fictional Telco sample. Intended users are reviewers and interviewers exploring the complete ML-to-application workflow.
+An end-to-end binary classification system for exploring churn patterns in IBM's fictional Telco sample. The application supports reproducible model evaluation and interactive scoring of similarly structured customer records.
 
 ## Data and label
 
-7,043 records, 19 input fields, and binary `Churn` (Yes = 1). `customerID` is excluded from predictors. This snapshot has no validated forward prediction horizon. It cannot establish who will churn next month in a real business. The source checksum and partition IDs are retained in reports.
+7,043 records, 19 input fields, and binary `Churn` (Yes = 1). `customerID` is excluded from predictors. This snapshot has no validated forward prediction horizon. A future-period churn forecast requires timestamped business data and temporal evaluation. The source checksum and partition IDs are retained in reports.
 
 ## Training and selection
 
@@ -27,6 +27,6 @@ Read [comparison.md](../reports/comparison.md) for the current measured results 
 - Permutation importance and what-if changes are associative, not causal. Correlated variables can dilute importance.
 - Synthetic fixture results are functional checks and must never be cited as IBM benchmark results.
 
-## Deployment boundary
+## Deployment requirements
 
-A local portfolio demo with no authentication, monitoring, drift detection, or persistent request logging. Only load trusted joblib artifacts. Restart after retraining. Required production work includes validation on timestamped target-business data, calibration, subgroup evaluation, cost-based thresholds, access controls, monitoring, and a controlled retention experiment.
+The API and UI support local execution and Docker Compose. Authentication, request monitoring, drift detection, and persistent request logging are outside the current implementation. Hosted operation requires those controls, trusted and versioned model artifacts, and validation on target-business data. A rollout plan should include calibration, subgroup evaluation, cost-based thresholds, and a controlled retention experiment. Load artifacts from trusted sources and restart the service after retraining.

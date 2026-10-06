@@ -6,7 +6,7 @@
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-14b8a6" alt="MIT license"></a>
 </p>
 
-**Which customers should a retention team review first?** ChurnLens explores that question using IBM's fictional telecom sample, then turns the selected model into a working API and interactive application.
+**Which customers should a retention team review first?** ChurnLens explores that question using the IBM Telco Customer Churn sample dataset, then turns the selected model into a working API and interactive application.
 
 **Built by [Hareth Al-Fawaz](https://github.com/The7areth).** Python · Pandas · scikit-learn · XGBoost · FastAPI · Streamlit · Docker.
 
@@ -19,7 +19,7 @@
 - Logistic Regression, Random Forest, and XGBoost compared under the same split.
 - Model selection and threshold tuning on validation data; final evaluation on a held-out test set.
 - Typed API inputs, service-consistency checks, readiness handling, and shared inference logic.
-- Automated tests, CI, Docker configuration, and documented limitations.
+- Automated tests, CI, Docker configuration, and a documented model card.
 
 ## Results you can inspect
 
@@ -113,11 +113,11 @@ curl -X POST http://localhost:8000/predict \
 
 The response contains `churn_probability`, `risk`, `predicted_churn`, `threshold`, `model`, and `dataset`. `TotalCharges` may be null; invalid categories or contradictory services return 422. A missing model returns 503. See the [complete input example](examples/customer.json).
 
-## What to know before interpreting the scores
+## Evaluation scope and next steps
 
-This is a **portfolio benchmark on fictional sample data**. It has not established a future churn horizon, production accuracy, calibrated probabilities, or measured retention lift. F1 is a demo threshold objective; a business would choose an operating point using costs and outreach capacity. Feature importance describes associations rather than causal effects.
+The reported results are a **held-out benchmark on IBM’s fictional Telco sample dataset**. Model selection uses validation ROC-AUC, and threshold selection uses validation F1. Applying the model to a specific business would require a defined prediction window, representative data, temporal validation, probability calibration, and a threshold based on outreach costs and capacity. Feature importance describes associations rather than causal effects.
 
-The model card documents data limitations, demographic inputs, extrapolation, and deployment boundaries. The [walkthrough](docs/project-walkthrough.md) explains the decisions and tradeoffs in detail.
+The [model card](docs/model-card.md) records the evaluation assumptions, demographic inputs, and deployment requirements. The [walkthrough](docs/project-walkthrough.md) explains the decisions and tradeoffs in detail.
 
 ## Reproduce, contribute, extend
 
@@ -128,7 +128,7 @@ black --check src app tests
 
 CI checks formatting, tests, a synthetic three-model training run, and the Docker application. See the **live CI badge** for execution status; [verification notes](reports/verification.md) describe local checks. Direct dependencies are pinned, and `requirements-lock.txt` captures the tested Python 3.12 development environment. Platform differences can affect numerical results.
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for the development workflow and [the roadmap](docs/roadmap.md) for prioritized extensions. [The demo guide](docs/demo-guide.md) includes a short presentation and a CV bullet.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the development workflow and [the roadmap](docs/roadmap.md) for prioritized extensions. [The demo guide](docs/demo-guide.md) covers the prediction workflow and results dashboard.
 
 ## License and attribution
 

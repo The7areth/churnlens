@@ -89,4 +89,4 @@ The temporary container writes data, the model, and reports to your checkout. Th
 | Dataset download fails | Retry; use the supplied CSV or synthetic sample if offline. Never bypass the checksum without reviewing the changed source. |
 | Numerical/deprecation warnings | Check versions and the local verification notes; retrain in a consistent environment. |
 
-Only load trusted joblib files. This is a local demonstration, with no authentication or production hardening.
+Load joblib artifacts from trusted sources. The provided setup targets local execution; hosted deployment requires authentication and the operational controls listed in the model card.

@@ -1,39 +1,21 @@
-# SYNC demo guide — Hareth Al-Fawaz
+# Application walkthrough
 
-## Two-minute walkthrough
+## Score a customer
 
-1. **Problem, 15 seconds:** “I built a small system to help a retention team prioritize customer review. It estimates churn likelihood from account and service information.”
-2. **Working product, 40 seconds:** Open Streamlit, enter a customer, and click Estimate churn risk. Explain the estimated probability and threshold. Change the contract or tenure and resubmit to illustrate model behavior. Say explicitly that this is not proof an intervention would prevent churn.
-3. **Evidence, 35 seconds:** Open Model evidence. Explain the three candidates, training-only preprocessing, validation selection, and final held-out evaluation. Be ready to describe one false positive and one false negative.
-4. **Engineering, 20 seconds:** Open FastAPI `/docs`, show the typed input contract, and explain that the UI calls this endpoint. The persisted artifact includes preprocessing and the threshold, preventing inconsistent transformations.
-5. **Next step, 10 seconds:** “For a real business I would validate on future periods, calibrate probabilities, and choose the threshold using retention costs and team capacity.”
+Start the API and Streamlit interface using [the setup guide](running-locally.md). Enter a customer’s account and service details, then select **Estimate churn risk**. The response shows the model’s churn score, risk label, decision threshold, and model provenance.
 
-## Before October 9
+Changing an input and submitting again illustrates how the fitted model responds. These comparisons describe model behavior rather than the causal effect of changing a customer’s contract or services.
 
-- Read the preprocessing and training code; reproduce the metrics yourself.
-- Practice a complete demo without internet. Keep the CSV, model artifact, Python environment, and screenshots on your laptop.
-- Add [The7areth/churnlens](https://github.com/The7areth/churnlens) to your CV and pin it on your profile.
-- Use real benchmark scores from `reports/comparison.md`, never the synthetic smoke-test scores.
-- Prepare a screenshot fallback and start both services before the event.
+## Inspect model evidence
 
-## Questions to prepare
+Open **Model evidence** to review the candidate models, evaluation metrics, and held-out results. Training-only preprocessing is persisted with the classifier. Model selection uses validation ROC-AUC; the operating threshold uses validation F1. The test partition provides the final reported evaluation.
 
-**Why not just accuracy?** Most customers in this sample do not churn. A majority-class classifier can look accurate while finding no churners. Precision, recall, F1, and ROC-AUC show different aspects of the problem.
+The synthetic sample supports functional smoke tests. The IBM benchmark results are recorded separately in [the model comparison](../reports/comparison.md).
 
-**Why a validation split?** Choosing a model or a threshold from the test set would bias the final performance estimate. Validation handles those decisions; test data is for reporting.
+## Explore the API
 
-**Why persist preprocessing?** The API must apply exactly the same learned medians, scaling, and category mapping used during training.
+Open FastAPI’s `/docs` page to inspect the typed request schema and submit the [example customer](../examples/customer.json). The UI calls the same API, which loads the saved preprocessing, classifier, and threshold. Invalid inputs receive a validation response; model readiness is exposed through `/health`.
 
-**Why not always XGBoost?** Complexity does not guarantee better generalization. The winner is whichever model earns the highest validation ROC-AUC in this fixed comparison.
+## Continue into the implementation
 
-**Why F1?** It is a simple demo compromise between precision and recall. A real retention program should specify costs and capacity before choosing a threshold.
-
-**What does a probability mean?** It is a model estimate from a fictional sample. We have not demonstrated probability calibration or real-business transferability.
-
-**What did you build?** Describe the parts you have reviewed and can explain: data validation, leakage-safe preprocessing, model comparison, persistence, API, UI, tests, and Docker configuration. Be transparent about AI assistance if asked.
-
-## CV bullet
-
-Built an end-to-end customer churn prediction system using Python, scikit-learn, XGBoost, FastAPI, Streamlit, and Docker; compared three models on 7,043 IBM Telco records, achieving 0.832 held-out ROC-AUC and 0.570 F1 with Logistic Regression, with reproducible preprocessing and a validated prediction API.
-
-Use this after reviewing and reproducing the implementation. Docker configuration is included; local Docker runtime verification is recorded separately in `reports/verification.md`.
+Read the [complete walkthrough](project-walkthrough.md) for the data preparation, selection protocol, persistence, and serving flow. The [model card](model-card.md) describes the dataset, evaluation scope, and deployment requirements.

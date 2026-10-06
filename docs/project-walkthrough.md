@@ -45,7 +45,7 @@ Read: [data.py](../src/churn/data.py), [config.py](../src/churn/config.py), [dat
 
 The data loader checks required columns, unique/nonmissing customer IDs, valid labels, valid customer fields, and sufficient examples of both classes. Numeric parsing fails on unexpected nonnumeric values. Blank TotalCharges becomes a missing value.
 
-There are **11 blank TotalCharges entries** in the full dataset; all have zero tenure. Seven are in the training partition. The current pipeline uses a training-median imputer. That is a simple general-purpose choice, with a domain limitation: an established customer's median accumulated charge may be a poor representation of a new customer. A future development-only experiment could compare zero-tenure-specific treatment and a missingness indicator. Do not claim that comparison has already been performed.
+There are **11 blank TotalCharges entries** in the full dataset; all have zero tenure. Seven are in the training partition. The current pipeline uses a training-median imputer. That is a simple general-purpose choice, with a domain limitation: an established customer's median accumulated charge may be a poor representation of a new customer. A future development-only experiment could compare zero-tenure-specific treatment and a missingness indicator. That experiment is on the development roadmap.
 
 Service rules prevent contradictory records. If PhoneService is No, MultipleLines must be No phone service. If InternetService is No, internet add-ons must be No internet service. The UI applies those conventions automatically; the API rejects contradictory direct requests.
 
@@ -63,7 +63,7 @@ The split is stratified, which approximately preserves the churn proportion in e
 
 **Data leakage** occurs when information unavailable at the intended training/prediction stage influences the model. Fitting an imputer or scaler using test rows would leak information about the test distribution. Choosing a model or threshold because it looks best on the test set would also bias the evaluation.
 
-The project prevents those paths by fitting transformations on training data and making selection decisions on validation data. The validation set is reused for model and threshold selection, so its selected scores can be optimistic. The test set provides the final check. There is no claim of cross-validation or nested cross-validation in this release.
+The project prevents those paths by fitting transformations on training data and making selection decisions on validation data. The validation set is reused for model and threshold selection, so its selected scores can be optimistic. The test set provides the final check. This release uses a fixed holdout protocol; cross-validation is a possible extension.
 
 The test results have now been inspected. Further optimization should use a defined development protocol and eventually fresh final evaluation data, rather than repeatedly choosing changes from these same test scores.
 
@@ -157,7 +157,7 @@ On the 1,409-row test set, the served model produces this confusion matrix:
 
 **Accuracy = (910 + 199) / 1,409 ≈ 78.7%.** Predicting everyone as retained already gives approximately 73.5% accuracy and zero churn recall. This is why accuracy alone would give an incomplete picture.
 
-The results are useful as an honest baseline with a working service. They do not justify “production-ready retention prediction” or a claim that revenue was saved.
+The results establish a reproducible baseline connected to a working prediction service. Measuring retention or revenue impact requires a prospective business evaluation.
 
 Read: [metrics.json](../reports/metrics.json), [comparison](../reports/comparison.md).
 
@@ -191,7 +191,7 @@ Read: [api.py](../src/churn/api.py), [predict.py](../src/churn/predict.py), [Str
 
 Tests cover data validity, duplicate IDs, disjoint reproducible splits, inference that does not refit preprocessing, persistence/API parity, invalid requests, missing-model handling, download retries/checksums, complete synthetic training, and UI-to-API service normalization.
 
-These checks establish important functional properties; they do not prove future predictive performance, security, fairness, or calibration. The initial local suite had 17 passing tests. The live CI workflow is the current authority for the published commit's checks.
+These checks verify functional behavior. Predictive generalization, calibration, subgroup performance, and deployment security require separate evaluations. The initial local suite had 17 passing tests. The live CI workflow is the current authority for the published commit's checks.
 
 Docker packages Python, dependencies, source, and the model/report files present at build time. Compose runs separate API and UI services. The UI reaches `http://api:8000` on the container network; the host reaches localhost ports. Readiness checks prevent starting the dependent UI before the API model is ready. Rebuilding is required after retraining because the artifact is copied into the image.
 
@@ -201,6 +201,6 @@ Reproducibility comes from fixed input bytes, saved splits, a fixed seed, explic
 
 Start with a concrete decision and better evidence: a defined future churn window, representative timestamped data, temporal validation, stable development-set evaluation, calibration assessment, and a cost/capacity-based operating threshold. Then evaluate demographic subgroup performance and whether those fields should be used at all.
 
-If the product is deployed, add authentication, rate limits, artifact integrity/version controls, request monitoring, and drift checks. Measure retention impact through a controlled outreach experiment. Each of these is a future extension, not a completed feature.
+If the product is deployed, add authentication, rate limits, artifact integrity/version controls, request monitoring, and drift checks. Measure retention impact through a controlled outreach experiment. These items form the deployment roadmap.
 
 See [the roadmap](roadmap.md) and [model card](model-card.md).

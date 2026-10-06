@@ -10,7 +10,7 @@
 
 **Built by [Hareth Al-Fawaz](https://github.com/The7areth).** Python · Pandas · scikit-learn · XGBoost · FastAPI · Streamlit · Docker.
 
-[Understand the project](docs/project-walkthrough.md) · [Run locally](docs/running-locally.md) · [Review the results](reports/comparison.md) · [Interview preparation](docs/interview-guide.md) · [Model card](docs/model-card.md)
+[Understand the project](docs/project-walkthrough.md) · [Run locally](docs/running-locally.md) · [Review the results](reports/comparison.md) · [Model card](docs/model-card.md)
 
 ## What this demonstrates
 
@@ -117,7 +117,7 @@ The response contains `churn_probability`, `risk`, `predicted_churn`, `threshold
 
 This is a **portfolio benchmark on fictional sample data**. It has not established a future churn horizon, production accuracy, calibrated probabilities, or measured retention lift. F1 is a demo threshold objective; a business would choose an operating point using costs and outreach capacity. Feature importance describes associations rather than causal effects.
 
-The model card documents data limitations, demographic inputs, extrapolation, and deployment boundaries. The [walkthrough](docs/project-walkthrough.md) explains the decisions and tradeoffs in detail; the [interview guide](docs/interview-guide.md) includes challenging questions and grounded answers.
+The model card documents data limitations, demographic inputs, extrapolation, and deployment boundaries. The [walkthrough](docs/project-walkthrough.md) explains the decisions and tradeoffs in detail.
 
 ## Reproduce, contribute, extend
 

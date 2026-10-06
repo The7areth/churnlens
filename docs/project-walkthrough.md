@@ -1,6 +1,6 @@
 # Understand ChurnLens from end to end
 
-Read this before the interview guide. It explains the implemented system, the reasoning behind it, and the boundaries of its evidence. Links point to the code you should be able to navigate during a review.
+This walkthrough explains the implemented system, the reasoning behind it, and the boundaries of its evidence. Links point to the code you should be able to navigate during a review.
 
 ## 1. The project in one minute
 
@@ -203,4 +203,4 @@ Start with a concrete decision and better evidence: a defined future churn windo
 
 If the product is deployed, add authentication, rate limits, artifact integrity/version controls, request monitoring, and drift checks. Measure retention impact through a controlled outreach experiment. Each of these is a future extension, not a completed feature.
 
-See [the roadmap](roadmap.md), [model card](model-card.md), and [interview guide](interview-guide.md).
+See [the roadmap](roadmap.md) and [model card](model-card.md).
